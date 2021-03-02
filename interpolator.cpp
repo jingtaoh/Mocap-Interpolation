@@ -5,6 +5,7 @@
 #include "motion.h"
 #include "interpolator.h"
 #include "types.h"
+#include <iostream>
 
 Interpolator::Interpolator()
 {
@@ -103,36 +104,53 @@ void Interpolator::Rotation2Euler(double R[9], double angles[3])
 
 void Interpolator::Euler2Rotation(double angles[3], double R[9])
 {
-  // students should implement this
+  double a = angles[0]*M_PI/180.;
+  double b = angles[1]*M_PI/180.;
+  double c = angles[2]*M_PI/180.;
+  R[0] = cos(c) * cos(b); R[1] = cos(c) * sin(b) * sin(a) - sin(c) * cos(a); R[2] = cos(c) * sin(b) * cos(a) + sin(c) * sin(a);
+  R[3] = sin(c) * cos(b); R[4] = sin(c) * sin(b) * sin(a) + cos(c) * cos(a); R[5] = sin(c) * sin(b) * cos(a) - cos(c) * sin(a);
+  R[6] = -sin(b);   R[7] = cos(b) * sin(a); R[8] = cos(b) * cos(a);
 }
 
 void Interpolator::BezierInterpolationEuler(Motion * pInputMotion, Motion * pOutputMotion, int N)
 {
+    // TODO : 1 Bezier Interpolation - Euler
   // students should implement this
 }
 
 void Interpolator::LinearInterpolationQuaternion(Motion * pInputMotion, Motion * pOutputMotion, int N)
 {
+    // TODO : 2 SLERP interpolation - Quaternion
   // students should implement this
 }
 
 void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion * pOutputMotion, int N)
 {
+    // TODO 3 Bezier Interpolation - Quaternion
   // students should implement this
 }
 
 void Interpolator::Euler2Quaternion(double angles[3], Quaternion<double> & q) 
 {
-  // students should implement this
+  // first convert euler angles to rotation matrix
+  double R[9];
+  Euler2Rotation(angles, R);
+  // then covert rotation matrix to quaternion
+  q = q.Matrix2Quaternion(R);
 }
 
 void Interpolator::Quaternion2Euler(Quaternion<double> & q, double angles[3]) 
 {
-  // students should implement this
+  // first convert quaternion to rotation matrix
+  double R[9];
+  q.Quaternion2Matrix(R);
+  // then covert rotation matrix to euler angles
+  Rotation2Euler(R, angles);
 }
 
 Quaternion<double> Interpolator::Slerp(double t, Quaternion<double> & qStart, Quaternion<double> & qEnd_)
 {
+    // TODO : 2.1 SLERP
   // students should implement this
   Quaternion<double> result;
   return result;
@@ -147,6 +165,7 @@ Quaternion<double> Interpolator::Double(Quaternion<double> p, Quaternion<double>
 
 vector Interpolator::DeCasteljauEuler(double t, vector p0, vector p1, vector p2, vector p3)
 {
+    // TODO : 1.1 DeCasteljau - Euler
   // students should implement this
   vector result;
   return result;
@@ -154,6 +173,7 @@ vector Interpolator::DeCasteljauEuler(double t, vector p0, vector p1, vector p2,
 
 Quaternion<double> Interpolator::DeCasteljauQuaternion(double t, Quaternion<double> p0, Quaternion<double> p1, Quaternion<double> p2, Quaternion<double> p3)
 {
+    // TODO : 3.1 DeCasteljau - Quaternion
   // students should implement this
   Quaternion<double> result;
   return result;

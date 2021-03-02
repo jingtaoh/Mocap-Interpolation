@@ -8,9 +8,12 @@ USC ID: 2697735160
 ================
 
 # Core Credit
+- Conversion
+    -[x] Euler angles to ratation matrix
+    -[x] Euler angles to Quaternion
+    -[x] Quaternion to Euler angles
 - Interpolation
     - Euler
-        -[ ] LERP
         -[ ] Bezier LERP
     - Quaternions
         -[ ] SLERP
@@ -22,6 +25,13 @@ USC ID: 2697735160
 -[ ] Support keyframes that are **non-uniform** in time.
 
 # Submission Requirement
+- Code
+    - Interpolation
+        - Euler
+            -[ ] Bezier LERP
+        - Quaternions
+            -[ ] SLERP
+            -[ ] Bezier SLERP
 - Report
     - [ ] graphs
         -[ ] Graph #1 - linear Euler vs Bezier Euler vs Input
