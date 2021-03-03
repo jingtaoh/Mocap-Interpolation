@@ -48,7 +48,10 @@ protected:
   void Rotation2Euler(double R[9], double angles[3]);
   void Euler2Rotation(double angles[3], double R[9]);
   void Euler2Quaternion(double angles[3], Quaternion<double> & q); 
-  void Quaternion2Euler(Quaternion<double> & q, double angles[3]); 
+  void Quaternion2Euler(Quaternion<double> & q, double angles[3]);
+
+  // vector linear interpolation
+  vector Lerp(double t, vector vStart, vector vEnd);
 
   // quaternion interpolation
   Quaternion<double> Slerp(double t, Quaternion<double> & qStart, Quaternion<double> & qEnd);
