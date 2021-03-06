@@ -104,6 +104,8 @@ public:
   inline real Norm2() const; // returns the squared norm of the quaternion, i.e. s*s + x*x + y*y + z*z
   inline real Norm() const { return sqrt(Norm2()); }
 
+  inline real dot (const Quaternion rhs) const; // return dot product
+
   // Transforms the quaternion to the corresponding rotation matrix.
   // Quaternion is assumed to be a unit quaternion.
   // R is a 3x3 orthogonal matrix and will be returned in row-major order.
@@ -236,6 +238,12 @@ inline void Quaternion<real>::Normalize()
   y *= invNorm;
   z *= invNorm;
 
+}
+
+template <typename real>
+inline real Quaternion<real>::dot(const Quaternion<real> rhs) const
+{
+    return s * rhs.s + x * rhs.x + y * rhs.y + z * rhs.z;
 }
 
 template <typename real>
