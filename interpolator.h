@@ -54,6 +54,7 @@ protected:
   vector Lerp(double t, vector vStart, vector vEnd);
 
   // quaternion interpolation
+  Quaternion<double> Lerp(double t, Quaternion<double> & qStart, Quaternion<double> & qEnd);
   Quaternion<double> Slerp(double t, Quaternion<double> & qStart, Quaternion<double> & qEnd);
   Quaternion<double> Double(Quaternion<double> p, Quaternion<double> q);
 

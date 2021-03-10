@@ -293,17 +293,9 @@ void Interpolator::LinearInterpolationQuaternion(Motion * pInputMotion, Motion *
                 // interpolate
                 interpolatedQuat = Slerp(t, startQuat, endQuat);
 
-                if (isnan(interpolatedQuat.Gets()))   // (startQuat == endQuat) => (startAngles == endAngles)
-                {
-                    std::cout << "nan" << std::endl;
-                    // there's no point of interpolation, just assign startAngles
-                    interpolatedPosture.bone_rotation[bone].setValue(startAngles[0], startAngles[1], startAngles[2]);
-                } else
-                {
-                    // convert quaternion back to euler angles
-                    Quaternion2Euler(interpolatedQuat, interpolatedAngles);
-                    interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
-                }
+                // convert quaternion back to euler angles
+                Quaternion2Euler(interpolatedQuat, interpolatedAngles);
+                interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
 
 //                if ((bone == 2) && (startKeyframe + frame >= 600) && (startKeyframe + frame <= 800))
                 if ((bone == 0) && (startKeyframe + frame >= 200) && (startKeyframe + frame <= 500))
@@ -493,18 +485,10 @@ void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion *
                 // Decasteljau construction
                 interpolatedQuat = DeCasteljauQuaternion(t, startQuat, aQuats[bone], bQuats[bone], endQuat);
 
-                if (isnan(interpolatedQuat.Gets()))   // (startQuat == endQuat) => (startAngles == endAngles)
-                {
-                    std::cout << "nan" << std::endl;
-                    // there's no point of interpolation, just assign startAngles
-                    interpolatedPosture.bone_rotation[bone].setValue(startPosture->bone_rotation[bone].x(), startPosture->bone_rotation[bone].y(),startPosture->bone_rotation[bone].z());
-                } else
-                {
-                    // convert quaternion back to euler angle and store it into interpolated posture
-                    double interpolatedAngles[3];
-                    Quaternion2Euler(interpolatedQuat, interpolatedAngles);
-                    interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
-                }
+                // convert quaternion back to euler angle and store it into interpolated posture
+                double interpolatedAngles[3];
+                Quaternion2Euler(interpolatedQuat, interpolatedAngles);
+                interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
 
 //                if ((bone == 2) && (startKeyframe + frame >= 600) && (startKeyframe + frame <= 800))
                 if ((bone == 0) && (startKeyframe + frame >= 200) && (startKeyframe + frame <= 500))
