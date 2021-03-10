@@ -295,6 +295,7 @@ void Interpolator::LinearInterpolationQuaternion(Motion * pInputMotion, Motion *
 
                 if (isnan(interpolatedQuat.Gets()))   // (startQuat == endQuat) => (startAngles == endAngles)
                 {
+                    std::cout << "nan" << std::endl;
                     // there's no point of interpolation, just assign startAngles
                     interpolatedPosture.bone_rotation[bone].setValue(startAngles[0], startAngles[1], startAngles[2]);
                 } else
@@ -494,6 +495,7 @@ void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion *
 
                 if (isnan(interpolatedQuat.Gets()))   // (startQuat == endQuat) => (startAngles == endAngles)
                 {
+                    std::cout << "nan" << std::endl;
                     // there's no point of interpolation, just assign startAngles
                     interpolatedPosture.bone_rotation[bone].setValue(startPosture->bone_rotation[bone].x(), startPosture->bone_rotation[bone].y(),startPosture->bone_rotation[bone].z());
                 } else
@@ -543,6 +545,11 @@ vector Interpolator::Lerp(double t, vector vStart, vector vEnd) {
     return (vStart * (1 - t) + vEnd * t);
 }
 
+Quaternion<double> Interpolator::Lerp(double t, Quaternion<double> & qStart, Quaternion<double> & qEnd)
+{
+    return (qStart * (1 - t) + qEnd * t);
+}
+
 Quaternion<double> Interpolator::Slerp(double t, Quaternion<double> & qStart, Quaternion<double> & qEnd)
 {
     qStart.Normalize();
@@ -558,7 +565,13 @@ Quaternion<double> Interpolator::Slerp(double t, Quaternion<double> & qStart, Qu
 
     double theta = acos(dot);
 
-    return sin((1-t)*theta)/sin(theta) * qStart + sin(t*theta)/sin(theta) * qEnd;
+    Quaternion<double> result;
+    result = sin((1-t)*theta)/sin(theta) * qStart + sin(t*theta)/sin(theta) * qEnd;
+
+    if (isnan(result.Gets()))
+        result = Lerp(t, qStart, qEnd);
+
+    return result;
 }
 
 Quaternion<double> Interpolator::Double(Quaternion<double> p, Quaternion<double> q)
