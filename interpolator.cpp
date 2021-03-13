@@ -81,14 +81,14 @@ void Interpolator::LinearInterpolationEuler(Motion * pInputMotion, Motion * pOut
       // interpolate bone rotations
       for (int bone = 0; bone < MAX_BONES_IN_ASF_FILE; bone++){
           interpolatedPosture.bone_rotation[bone] = Lerp(t, startPosture->bone_rotation[bone], endPosture->bone_rotation[bone]);
-          if ((bone == boneIndex) && (startKeyframe + frame >= startFrame) && (startKeyframe + frame <= endFrame))
+          if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
           {
               if (startKeyframe == 0)
-                  std::cout << (startKeyframe) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
+                  std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
               Posture *inputPosture = pInputMotion->GetPosture(startKeyframe + frame);
-              std::cout << (startKeyframe + frame) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
+              std::cout << (startKeyframe + frame + 1) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
               if (frame == N)
-                  std::cout << (startKeyframe + N + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
+                  std::cout << (startKeyframe + N + 1 + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
           }
       }
 
@@ -241,14 +241,14 @@ void Interpolator::BezierInterpolationEuler(Motion * pInputMotion, Motion * pOut
             for (int bone = 0; bone < MAX_BONES_IN_ASF_FILE; bone++)
             {
                 interpolatedPosture.bone_rotation[bone] = DeCasteljauEuler(t, startPosture->bone_rotation[bone], aPosture.bone_rotation[bone], bPosture.bone_rotation[bone], endPosture->bone_rotation[bone]);
-                if ((bone == boneIndex) && (startKeyframe + frame >= startFrame) && (startKeyframe + frame <= endFrame))
+                if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
                 {
                     if (startKeyframe == 0)
-                        std::cout << (startKeyframe) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
+                        std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
                     Posture *inputPosture = pInputMotion->GetPosture(startKeyframe + frame);
-                    std::cout << (startKeyframe + frame) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
+                    std::cout << (startKeyframe + frame + 1) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
                     if (frame == N)
-                        std::cout << (startKeyframe + N + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
+                        std::cout << (startKeyframe + N + 1 + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
                 }
             }
 
@@ -308,14 +308,14 @@ void Interpolator::LinearInterpolationQuaternion(Motion * pInputMotion, Motion *
                 Quaternion2Euler(interpolatedQuat, interpolatedAngles);
                 interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
 
-                if ((bone == boneIndex) && (startKeyframe + frame >= startFrame) && (startKeyframe + frame <= endFrame))
+                if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
                 {
                     if (startKeyframe == 0)
-                        std::cout << (startKeyframe) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
+                        std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
                     Posture *inputPosture = pInputMotion->GetPosture(startKeyframe + frame);
-                    std::cout << (startKeyframe + frame) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
+                    std::cout << (startKeyframe + frame + 1) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
                     if (frame == N)
-                        std::cout << (startKeyframe + N + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
+                        std::cout << (startKeyframe + N + 1 + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
                 }
             }
 
@@ -504,14 +504,14 @@ void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion *
                 Quaternion2Euler(interpolatedQuat, interpolatedAngles);
                 interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
 
-                if ((bone == boneIndex) && (startKeyframe + frame >= startFrame) && (startKeyframe + frame <= endFrame))
+                if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
                 {
                     if (startKeyframe == 0)
-                        std::cout << (startKeyframe) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
+                        std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
                     Posture *inputPosture = pInputMotion->GetPosture(startKeyframe + frame);
-                    std::cout << (startKeyframe + frame) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
+                    std::cout << (startKeyframe + frame + 1) << "\t" << inputPosture->bone_rotation[bone][axis] << "\t" << interpolatedPosture.bone_rotation[bone][axis] << std::endl;
                     if (frame == N)
-                        std::cout << (startKeyframe + N + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
+                        std::cout << (startKeyframe + N + 1 + 1) << "\t" << endPosture->bone_rotation[bone][axis] << "\t" << endPosture->bone_rotation[bone][axis] << std::endl;
                 }
             }
             pOutputMotion->SetPosture(startKeyframe + frame, interpolatedPosture);
