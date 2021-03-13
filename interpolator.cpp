@@ -42,15 +42,15 @@ void Interpolator::Interpolate(Motion * pInputMotion, Motion ** pOutputMotion, i
   }
 }
 
-//int boneIndex = 0;      // root
-//int startFrame = 200;   // Frame: 200 - 500
-//int endFrame = 500;
-//int axis = 2;           // rotation around z axis
+int boneIndex = 0;      // root
+int startFrame = 200;   // Frame: 200 - 500
+int endFrame = 500;
+int axis = 2;           // rotation around z axis
 
-int boneIndex = 2;      // lfemur
-int startFrame = 600;   // Frame: 600 - 800
-int endFrame = 800;
-int axis = 0;           // rotation around x axis
+//int boneIndex = 2;      // lfemur
+//int startFrame = 600;   // Frame: 600 - 800
+//int endFrame = 800;
+//int axis = 0;           // rotation around x axis
 
 void Interpolator::LinearInterpolationEuler(Motion * pInputMotion, Motion * pOutputMotion, int N)
 {
@@ -473,7 +473,7 @@ void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion *
 
                 intermediate_rot = Double(startQuat, endQuat);
                 intermediate_rot = Slerp(0.5, intermediate_rot, nextQuat);
-                bQuats[bone] = Slerp(1.0/3, endQuat, intermediate_rot);
+                bQuats[bone] = Slerp(-1.0/3, endQuat, intermediate_rot);
             }
         }
 
