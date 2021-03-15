@@ -10,6 +10,7 @@
 #include <fstream>
 #include "interpolator.h"
 #include "motion.h"
+#include "performanceCounter.h"
 
 int main(int argc, char **argv) 
 {
@@ -99,6 +100,8 @@ int main(int argc, char **argv)
   interpolator.SetAngleRepresentation(angleRepresentation);
 
   printf("Interpolating...\n");
+  PerformanceCounter counter;
+  counter.StartCounter();
   Motion * pOutputMotion; // interpolated motion (output)
   interpolator.Interpolate(pInputMotion, &pOutputMotion, N);
   if (pOutputMotion == NULL)
@@ -106,7 +109,8 @@ int main(int argc, char **argv)
     printf("Error: interpolation failed. No output generated.\n");
     exit(1);
   }
-  printf("Interpolation completed.\n");
+  counter.StopCounter();
+  printf("Interpolation completed. Computation Time: %.4fs\n", counter.GetElapsedTime());
 
   printf("Writing output motion capture file to %s...\n", outputMotionCaptureFile);
   int forceAllJointsBe3DOF = 1;
