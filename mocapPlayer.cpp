@@ -280,8 +280,14 @@ void saveScreenToFile_callback(Fl_Button *button, void *)
 {
   if (button == screenShot_button)
   {
+    int scale;
+#ifdef __APPLE__
+    scale = 2;
+#else
+    scale = 1;
+#endif
     CreateScreenFilename(SAVE_ONCE, saveScreenToFileOnceCount, saveScreenToFileOnceFilename);
-    saveScreenshot(640, 480, saveScreenToFileOnceFilename);
+    saveScreenshot(640 * scale, 480 * scale, saveScreenToFileOnceFilename);
     printf("%s is saved to disk.\n", saveScreenToFileOnceFilename);
     saveScreenToFileOnceCount++;
     saveScreenToFile = SAVE_DISABLED;
