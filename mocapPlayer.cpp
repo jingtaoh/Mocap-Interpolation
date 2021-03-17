@@ -280,14 +280,8 @@ void saveScreenToFile_callback(Fl_Button *button, void *)
 {
   if (button == screenShot_button)
   {
-    int scale;
-#ifdef __APPLE__
-    scale = 2;
-#else
-    scale = 1;
-#endif
     CreateScreenFilename(SAVE_ONCE, saveScreenToFileOnceCount, saveScreenToFileOnceFilename);
-    saveScreenshot(640 * scale, 480 * scale, saveScreenToFileOnceFilename);
+    saveScreenshot(640, 480, saveScreenToFileOnceFilename);
     printf("%s is saved to disk.\n", saveScreenToFileOnceFilename);
     saveScreenToFileOnceCount++;
     saveScreenToFile = SAVE_DISABLED;
@@ -449,14 +443,21 @@ void saveScreenshot(int windowWidth, int windowHeight, char * filename)
   if (filename == NULL)
     return;
 
+    int scale;
+#ifdef __APPLE__
+    scale = 2;
+#else
+    scale = 1;
+#endif
+
   // Allocate a picture buffer 
-  Pic * in = pic_alloc(windowWidth, windowHeight, 3, NULL);
+  Pic * in = pic_alloc(windowWidth*scale, windowHeight*scale, 3, NULL);
 
   printf("File to save to: %s\n", filename);
 
-  for (int i=windowHeight-1; i>=0; i--) 
+  for (int i=windowHeight*scale-1; i>=0; i--)
   {
-    glReadPixels(0, windowHeight-i-1, windowWidth, 1, GL_RGB, GL_UNSIGNED_BYTE,
+    glReadPixels(0, windowHeight*scale-i-1, windowWidth*scale, 1, GL_RGB, GL_UNSIGNED_BYTE,
       &in->pix[i*in->nx*in->bpp]);
   }
 
