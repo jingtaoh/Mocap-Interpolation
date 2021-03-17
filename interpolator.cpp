@@ -42,6 +42,8 @@ void Interpolator::Interpolate(Motion * pInputMotion, Motion ** pOutputMotion, i
   }
 }
 
+bool output = false;
+
 int boneIndex = 0;      // root
 int startFrame = 200;   // Frame: 200 - 500
 int endFrame = 500;
@@ -57,7 +59,8 @@ void Interpolator::LinearInterpolationEuler(Motion * pInputMotion, Motion * pOut
   int inputLength = pInputMotion->GetNumFrames(); // frames are indexed 0, ..., inputLength-1
 
   int startKeyframe = 0;
-  std::cout << "# frame" << "\t" << "input" << "\t" << "linear Euler" << std::endl;
+  std::cout << "frame count: " << inputLength << std::endl;
+  if (output) std::cout << "# frame" << "\t" << "input" << "\t" << "linear Euler" << std::endl;
   while (startKeyframe + N + 1 < inputLength)
   {
     int endKeyframe = startKeyframe + N + 1;
@@ -81,7 +84,7 @@ void Interpolator::LinearInterpolationEuler(Motion * pInputMotion, Motion * pOut
       // interpolate bone rotations
       for (int bone = 0; bone < MAX_BONES_IN_ASF_FILE; bone++){
           interpolatedPosture.bone_rotation[bone] = Lerp(t, startPosture->bone_rotation[bone], endPosture->bone_rotation[bone]);
-          if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
+          if (output && (bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
           {
               if (startKeyframe == 0)
                   std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
@@ -139,7 +142,8 @@ void Interpolator::BezierInterpolationEuler(Motion * pInputMotion, Motion * pOut
     int inputLength = pInputMotion->GetNumFrames(); // frames are indexed 0, ..., inputLength-1
 
     int startKeyframe = 0;
-    std::cout << "# frame" << "\t" << "input" << "\t" << "Bezier Euler" << std::endl;
+    std::cout << "frame count: " << inputLength << std::endl;
+    if (output) std::cout << "# frame" << "\t" << "input" << "\t" << "Bezier Euler" << std::endl;
     while (startKeyframe + N + 1 < inputLength)
     {
         int endKeyframe = startKeyframe + N + 1;
@@ -241,7 +245,7 @@ void Interpolator::BezierInterpolationEuler(Motion * pInputMotion, Motion * pOut
             for (int bone = 0; bone < MAX_BONES_IN_ASF_FILE; bone++)
             {
                 interpolatedPosture.bone_rotation[bone] = DeCasteljauEuler(t, startPosture->bone_rotation[bone], aPosture.bone_rotation[bone], bPosture.bone_rotation[bone], endPosture->bone_rotation[bone]);
-                if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
+                if (output && (bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
                 {
                     if (startKeyframe == 0)
                         std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
@@ -267,7 +271,8 @@ void Interpolator::LinearInterpolationQuaternion(Motion * pInputMotion, Motion *
     int inputLength = pInputMotion->GetNumFrames(); // frames are indexed 0, ..., inputLength-1
 
     int startKeyframe = 0;
-    std::cout << "# frame" << "\t" << "input" << "\t" << "SLERP quaternion" << std::endl;
+    std::cout << "frame count: " << inputLength << std::endl;
+    if (output) std::cout << "# frame" << "\t" << "input" << "\t" << "SLERP quaternion" << std::endl;
     while (startKeyframe + N + 1 < inputLength)
     {
         int endKeyframe = startKeyframe + N + 1;
@@ -308,7 +313,7 @@ void Interpolator::LinearInterpolationQuaternion(Motion * pInputMotion, Motion *
                 Quaternion2Euler(interpolatedQuat, interpolatedAngles);
                 interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
 
-                if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
+                if (output && (bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
                 {
                     if (startKeyframe == 0)
                         std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
@@ -334,7 +339,8 @@ void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion *
     int inputLength = pInputMotion->GetNumFrames(); // frames are indexed 0, ..., inputLength-1
 
     int startKeyframe = 0;
-    std::cout << "# frame" << "\t" << "input" << "\t" << "Bezier SLERP quaternion" << std::endl;
+    std::cout << "frame count: " << inputLength << std::endl;
+    if (output) std::cout << "# frame" << "\t" << "input" << "\t" << "Bezier SLERP quaternion" << std::endl;
     while (startKeyframe + N + 1 < inputLength)
     {
         int endKeyframe = startKeyframe + N + 1;
@@ -504,7 +510,7 @@ void Interpolator::BezierInterpolationQuaternion(Motion * pInputMotion, Motion *
                 Quaternion2Euler(interpolatedQuat, interpolatedAngles);
                 interpolatedPosture.bone_rotation[bone].setValue(interpolatedAngles[0], interpolatedAngles[1], interpolatedAngles[2]);
 
-                if ((bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
+                if (output && (bone == boneIndex) && (startKeyframe + frame + 1 >= startFrame) && (startKeyframe + frame + 1 <= endFrame))
                 {
                     if (startKeyframe == 0)
                         std::cout << (startKeyframe + 1) << "\t" << startPosture->bone_rotation[bone][axis] << "\t" << startPosture->bone_rotation[bone][axis] << std::endl;
