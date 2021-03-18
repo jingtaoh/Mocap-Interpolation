@@ -24,6 +24,7 @@ USC ID: 2697735160
 
 # Submission Requirement
 - Source code
+    - executables `interpolate`, `mocapPlayer`
 - Report 
     - Motion_Capture_Interpolation_Report.pdf
     - graphs and additional findings
